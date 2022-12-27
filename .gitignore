@@ -1,0 +1,7 @@
+credentials
+*.key
+*.tfstate
+*.tfstate*
+.terraform/
+.terraform*
+archive/
