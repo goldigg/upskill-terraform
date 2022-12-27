@@ -31,7 +31,7 @@ variable "alb_target_group_arns" {}
 
 variable "web_image" {}
 variable "s3_image" {}
-# variable "aws_config" {}
+
 variable "web_endpoint" {
   
 }

@@ -129,14 +129,6 @@ resource "aws_ecs_task_definition" "s3" {
                 }
   }
       environment = [
-        # {
-        #   "name" : "AWS_ACCESS_KEY_ID",
-        #   "value" : var.aws_config.aws_access_key
-        # },
-        # {
-        #   "name" : "AWS_SECRET_ACCESS_KEY",
-        #   "value" : var.aws_config.aws_secret_access_key
-        # },
         {
           "name" : "WEB_ENDPOINT",
           "value" : "http://${var.web_endpoint}/info"
