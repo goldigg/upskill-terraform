@@ -7,7 +7,7 @@ on:
 
 jobs:  
   build:   
-    name: Build Image
+    name: Deploy Web and S3 app.
     runs-on: ubuntu-latest
     steps:
     - name: Check out code
@@ -29,5 +29,7 @@ jobs:
       with:
           parameterPairs: "/ggoldmann-upskil-version/web = TF_web_hash"
           withDecryption: "true" # defaults to true
+    - name: Terraform init
+      run: terraform init
     - name: Terraform Apply
       run: terraform apply -auto-approve -input=false
