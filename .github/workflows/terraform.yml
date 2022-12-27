@@ -1,0 +1,33 @@
+
+name: Deploy to ECR
+
+on: 
+  push:
+    branches: [ main ]
+
+jobs:  
+  build:   
+    name: Build Image
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+    
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+    - name: Get S3 version from SSM
+      uses: dkershner6/aws-ssm-getparameters-action@v1
+      with:
+          parameterPairs: "/ggoldmann-upskil-version/s3 = TF_s3_hash"
+          withDecryption: "true" # defaults to true
+    - name: Get Web version from SSM
+      uses: dkershner6/aws-ssm-getparameters-action@v1
+      with:
+          parameterPairs: "/ggoldmann-upskil-version/web = TF_web_hash"
+          withDecryption: "true" # defaults to true
+    - name: Terraform Apply
+      run: terraform apply -auto-approve -input=false
