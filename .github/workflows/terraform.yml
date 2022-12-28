@@ -20,14 +20,16 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
+
     - name: Get versions from SSM
-      uses: ProcureAi/aws-ssm-secrets-multiple@v1.0.0
+      uses: eliasjcjunior/aws-ssm-parameters-actions@main
       with:
-        SSM_PARAMETERS: |
-          TF_s3_hash=/ggoldmann-upskil-version/s3,
-          TF_web_hash=/ggoldmann-upskil-version/web,
+        split-env: true
+        paths: |
+          /ggoldmann-upskil-version/s3
+          /ggoldmann-upskil-version/web
     - name: show version from SSM
-      run: echo "TF_s3_hash $TF_s3_hash TF_web_hash $TF_web_hash"
+      run: echo "TF_s3_hash ${{ env.s3 }} TF_web_hash ${{ env.web }}"
     - name: Terraform init
       run: terraform init
     - name: Terraform Apply
