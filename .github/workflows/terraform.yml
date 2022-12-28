@@ -36,4 +36,7 @@ jobs:
     - name: Terraform init
       run: terraform init
     - name: Terraform Apply
+      env:
+          s3_hash: ${{ env.s3 }}
+          web_hash: ${{ env.web }}
       run: terraform apply -auto-approve -input=false -var s3_hash=$s3_hash -var web_hash=$web_hash
