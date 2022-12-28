@@ -24,12 +24,14 @@ jobs:
     - name: Get versions from SSM
       uses: eliasjcjunior/aws-ssm-parameters-actions@main
       with:
+        recursive: true
+        split-env: true
         paths: |
-          /ggoldmann-upskil-version/s3
+          /ggoldmann-upskil-version
     - name: show version from SSM
       env:
           s3_hash: ${{ env.s3 }}
-          web_hash: ${{ env.s3 }}
+          web_hash: ${{ env.web }}
       run: echo "TF_s3_hash $s3_hash TF_web_hash $web_hash"
     - name: Terraform init
       run: terraform init
