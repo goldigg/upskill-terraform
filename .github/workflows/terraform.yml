@@ -30,6 +30,8 @@ jobs:
       with:
           parameterPairs: "/ggoldmann-upskil-version/web = TF_web_hash"
           withDecryption: "true" # defaults to true
+    - name: Get Web version from SSM
+      run: echo "TF_s3_hash $TF_s3_hash TF_web_hash $TF_web_hash"
     - name: Terraform init
       run: terraform init
     - name: Terraform Apply
