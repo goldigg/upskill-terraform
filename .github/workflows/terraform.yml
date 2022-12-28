@@ -23,16 +23,18 @@ jobs:
     - name: Get S3 version from SSM
       uses: dkershner6/aws-ssm-getparameters-action@v1
       with:
-          parameterPairs: "/ggoldmann-upskil-version/s3 = TF_s3_hash"
+          parameterPairs: "/ggoldmann-upskil-version/s3=TF_s3_hash"
           withDecryption: "true" # defaults to true
+      # run: ::set-env s3_hash=$TF_s3_hash
     - name: Get Web version from SSM
       uses: dkershner6/aws-ssm-getparameters-action@v1
       with:
-          parameterPairs: "/ggoldmann-upskil-version/web = TF_web_hash"
+          parameterPairs: "/ggoldmann-upskil-version/web=TF_web_hash"
           withDecryption: "true" # defaults to true
-    - name: Get Web version from SSM
+      # run: ::set-env web_hash=$TF_web_hash
+    - name: show version from SSM
       run: echo "TF_s3_hash $TF_s3_hash TF_web_hash $TF_web_hash"
     - name: Terraform init
       run: terraform init
     - name: Terraform Apply
-      run: terraform apply -auto-approve -input=false -var s3_hash=$TF_s3_hash -var web_hash=$TF_web_hash
+      run: terraform apply -auto-approve -input=false -var s3_hash=$s3_hash -var web_hash=$web_hash
