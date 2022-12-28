@@ -32,4 +32,4 @@ jobs:
     - name: Terraform init
       run: terraform init
     - name: Terraform Apply
-      run: terraform apply -auto-approve -input=false
+      run: terraform apply -auto-approve -input=false -var s3_hash=$TF_s3_hash -var web_hash=$TF_web_hash
